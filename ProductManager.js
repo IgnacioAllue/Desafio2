@@ -11,10 +11,16 @@ class ProductManager {
     }
     
 
-    async addProduct(product){
+    async addProduct(product, code){
         let products = await this.getProducts()
         let newCode = products.length
         product.id = newCode
+        //let codigoExistente = products.findIndex(product => product.code == code)
+        //if(codigoExistente){
+        //    return console.log('Codigo ya existente, utilize otro')
+        //} else { 
+        //    products.push(product) 
+        //}
         products.push(product)
         await fs.promises.writeFile(this.path, JSON.stringify(products))
     }
@@ -42,7 +48,7 @@ class ProductManager {
         return {msg: `Producto ${products[indice].id} actualizado`}
     }
 
-    async deleteProduct(id){
+    async deleteProductById(id){
         let products = await this.getProducts()
         let indice = products.findIndex(product => product.id === id)
         let productoEliminado
@@ -60,7 +66,7 @@ let producto1 = {
     description: 'este producto es...',
     price: 3500,
     thumbnail: 'no img1',
-    code: 2,
+    code: 4,
     stock: 20,
 }
 
@@ -80,6 +86,6 @@ let producto2 = {
 //console.log(product)
 //let modificacion = await manager.updateProduct( 0, producto2)
 //console.log(modificacion)
-let deleteProduct = await manager.deleteProduct(2)
-console.log(deleteProduct)
+let deleteProductById = await manager.deleteProductById(0)
+console.log(deleteProductById)
 
